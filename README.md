@@ -3,81 +3,102 @@
 [![DOWNLOAD](https://api.bintray.com/packages/warkiz/maven/tickseekbar/images/download.svg)](https://bintray.com/warkiz/maven/tickseekbar/_latestVersion)
 [![API](https://img.shields.io/badge/API-14%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=14)
 
-This is a customizable SeekBar library on Android. Also, If you need Indicator to show top of seek bar, please see [the other library](https://github.com/warkiz/IndicatorSeekBar). [  中文.md ](https://github.com/warkiz/TickSeekBar/blob/master/README_zh.md)
+## Introduction
 
+This is a customizable SeekBar library on Android. Also, If you need Indicator to show top of seek bar.
 
-## OverView
-<img src="https://github.com/warkiz/TickSeekBar/blob/master/gif/overview.png?raw=true" width = "392" height = "115"/>
+# Source
 
-## Screenshot
-
-<img src="https://github.com/warkiz/TickSeekBar/blob/master/gif/continuous.gif?raw=true" width = "264" height = "464"/><img src="https://github.com/warkiz/TickSeekBar/blob/master/gif/discrete.gif?raw=true" width = "264" height = "464"/><img src="https://github.com/warkiz/TickSeekBar/blob/master/gif/custom.gif?raw=true" width = "264" height = "464"/>
+The code in this repository was inspired from https://github.com/warkiz/TickSeekBar. We are very thankful to warkiz.
 
 ## Demo
-[download](https://github.com/warkiz/TickSeekBar/blob/master/apk/demo.apk)
 
- Scan QR code to download:
-<img src="https://github.com/warkiz/TickSeekBar/blob/master/gif/demo_qrcode.png?raw=true" width = "100" height = "100"/>
+![Continuous, Discrete, Custom Java layout](Images/TickSeekBar_Demo.png)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-## Setup
+## Features
 
-```gradle
-implementation 'com.github.warkiz.tickseekbar:tickseekbar:0.1.4'
+* Continuous seek bar
+* Tick seek bar
+* Customizable continuous or tick seek bar
+* Creating seek bars from Java code
+* Follows Material Design guidelines
+
+## Installation
+
+In order to use the library, add the following line to your **root** gradle file:
+
+1. For using TickSeekBar module in sample app, include the source code and add the below dependencies in entry/build.gradle to generate hap/support.har.
+```
+	implementation fileTree(dir: 'libs', include: ['*.jar', '*.har'])
+        implementation project(path: ':tickseekbar')
+        implementation project(path: ':tickseekbar')
+        testImplementation 'junit:junit:4.13'
+        ohosTestImplementation 'com.huawei.ohos.testkit:runner:1.0.0.100'
+```
+2. For using TickSeekBar in separate application using har file, add the har file in the entry/libs folder and add the dependencies in entry/build.gradle file.
+```
+	dependencies {
+            implementation fileTree(dir: 'libs', include: ['*.har'])
+            testCompile 'junit:junit:4.12'
+	}
+
 ```
 
+
 ## Usage
+
+To use TickSeekBar in your app simply follow below simple steps:
+
 #### xml
 
-```xml
-<com.warkiz.tickseekbar.TickSeekBar
-    android:id="@+id/listener"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:tsb_ticks_count="5"
-    app:tsb_thumb_color="@color/colorAccent"
-    app:tsb_thumb_size="16dp"
-    app:tsb_show_tick_marks_type="oval"
-    app:tsb_tick_marks_color="@color/colorAccent"
-    app:tsb_tick_marks_size="8dp"
-    app:tsb_show_tick_texts="above"
-    app:tsb_tick_texts_color="@color/color_pink"
-    app:tsb_tick_texts_size="13sp"
-    app:tsb_track_background_color="@color/color_gray"
-    app:tsb_track_background_size="2dp"
-    app:tsb_track_progress_color="@color/color_blue"
-    app:tsb_track_progress_size="3dp" />
+``` <com.warkiz.tickseekbar.TickSeekBar
+        ohos:id="$+id:listener"
+        ohos:width="match_parent"
+        ohos:height="match_content"
+        app:tsb_show_tick_marks_type="oval"
+        app:tsb_show_tick_texts="above"
+        app:tsb_thumb_color="$color:colorAccent"
+        app:tsb_thumb_size="16vp"
+        app:tsb_tick_marks_color="$color:colorAccent"
+        app:tsb_tick_marks_size="8vp"
+        app:tsb_tick_texts_color="$color:color_pink"
+        app:tsb_tick_texts_size="13vp"
+        app:tsb_ticks_count="5"
+        app:tsb_track_background_color="$color:color_gray"
+        app:tsb_track_background_size="2vp"
+        app:tsb_track_progress_color="$color:color_blue"
+        app:tsb_track_progress_size="3vp" />
 ```
 
 #### Java
 
-```Java
-TickSeekBar seekBar = TickSeekBar
-             .with(getContext())
-             .max(200)
-             .min(10.2f)
-             .progressValueFloat(true)
-             .progress(33)
-             .tickCount(7)
-             .showTickMarksType(TickMarkType.DIVIDER)
-             .tickMarksColor(getResources().getColor(R.color.color_blue))
-             .tickMarksSize(6)//dp
-             .tickTextsSize(13)//sp
-             .showTickTextsPosition(TextPosition.ABOVE)
-             .tickTextsColorStateList(getResources().getColorStateList(R.color.selector_tick_texts_3_color))
-             .thumbColor(Color.parseColor("#ff0000"))
-             .thumbSize(14)
-             .trackProgressColor(getResources().getColor(R.color.colorAccent))
-             .trackProgressSize(4)
-             .trackBackgroundColor(getResources().getColor(R.color.color_gray))
-             .trackBackgroundSize(2)
-             .build();
+```    TickSeekBar seekBar = TickSeekBar
+                    .with(mContext)
+                    .max(TickSeekBarConstants.CUSTOM_MAX_VALUE)
+                    .min(TickSeekBarConstants.CUSTOM_DISCRETE_TICKS_MIN)
+                    .progressValueFloat(true)
+                    .progress(TickSeekBarConstants.CUSTOM_PROGRESS_VALUE)
+                    .tickCount(TickSeekBarConstants.CUSTOM_TICK_COUNT)
+                    .showTickMarksType(TickMarkType.DIVIDER)
+                    .tickMarksColor(new Color(ResourceTable.Color_color_blue))
+                    .tickMarksSize(TickSeekBarConstants.CUSTOM_DISCRETE_TICK_MARKS_SIZE)
+                    .tickTextsSize(TickSeekBarConstants.CUSTOM_TICK_TEXTS_SIZE)
+                    .showTickTextsPosition(TextPosition.ABOVE)
+                    .tickTextsColorStateList(StateElementUtil.initTickTextColorState(TickSeekBarConstants.INDEX_VALUE_THREE))
+                    .thumbColor(new Color(mContext.getResourceManager().getElement(ResourceTable.Color_color_1).getColor()))
+                    .thumbSize(TickSeekBarConstants.CUSTOM_THUMB_SIZE)
+                    .trackProgressColor(new Color(mContext.getResourceManager().getElement(ResourceTable.Color_colorAccent).getColor()))
+                    .trackProgressSize(TickSeekBarConstants.CUSTOM_TRACK_PROGRESS_SIZE)
+                    .trackBackgroundColor(new Color(mContext.getResourceManager().getElement(ResourceTable.Color_color_gray).getColor()))
+                    .trackBackgroundSize(2)
+                    .build();
 ```
 
 ## Custom section tracks color
 The color of every block of seek bar can also be custom.
 
-```Java
-sectionSeekBar.customSectionTrackColor(new ColorCollector() {
+```sectionSeekBar.customSectionTrackColor(new ColorCollector() {
     @Override
     public boolean collectSectionTrackColor(int[] colorIntArr) {
         //the length of colorIntArray equals section count
@@ -90,76 +111,55 @@ sectionSeekBar.customSectionTrackColor(new ColorCollector() {
 });
 ```
 
-## Selector drawable&color were supported
+## Selector color were supported, drawable elements not yet supported
 
-You can set the StateListDrawable or ColorStateList for the thumb, tickMarks;
-Also, ColorStateList for tickTexts is supported, too. Usage's format acccording to:
+You can set the StateElement for the thumb, tickMarks, tickText colors in Java. Xml selector not supported.
+Usage's format acccording to:
 
-Thumb selector drawable:
-
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <!--this drawable is for thumb when pressing-->
-    <item android:drawable="@mipmap/ic_launcher_round" android:state_pressed="true" />
-    <!--for thumb in normal-->
-    <item android:drawable="@mipmap/ic_launcher" />
-</selector>
-```
 
 Thumb selector color:
 
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <!--this color is for thumb which is at pressing status-->
-    <item android:color="@color/colorAccent" android:state_pressed="true" />
-    <!--for thumb which is at normal status-->
-    <item android:color="@color/color_blue" />
-</selector>
-```
-
-TickMarks selector drawable：
-
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <!--this drawable is for tickMarks when pressing-->
-    <item android:drawable="@mipmap/ic_launcher_round" android:state_selected="true" />
-    <!--for tickMarks in normal-->
-    <item android:drawable="@mipmap/ic_launcher" />
-</selector>
+```StateElement drawableStateElement = new StateElement();
+        drawableStateElement.addState(new int[] {ComponentState.COMPONENT_STATE_PRESSED},
+                createCircularDrawable(context, com.warkiz.tickseekbar.ResourceTable.Color_color_blue,
+                        TickSeekBarConstants.DEFAULT_PIXEL_MAP_HEIGHT));
+        drawableStateElement.addState(new int[] {ComponentState.COMPONENT_STATE_EMPTY},
+                createCircularDrawable(context, com.warkiz.tickseekbar.ResourceTable.Color_colorAccent,
+                        TickSeekBarConstants.DEFAULT_PIXEL_MAP_HEIGHT));
 ```
 
 TickMarks selector color：
 
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <!--this color is for marks those are at left side of thumb-->
-    <item android:color="@color/colorAccent" android:state_selected="true" />
-    <!--for marks those are at right side of thumb-->
-    <item android:color="@color/color_gray" />
-</selector>
+```StateElement drawableStateElement = new StateElement();
+        drawableStateElement.addState(new int[] {ComponentState.COMPONENT_STATE_SELECTED},
+                createCircularDrawable(context, com.warkiz.tickseekbar.ResourceTable.Color_colorPrimary,
+                        TickSeekBarConstants.DEFAULT_PIXEL_MAP_HEIGHT));
+        drawableStateElement.addState(new int[] {ComponentState.COMPONENT_STATE_FOCUSED},
+                createCircularDrawable(context, com.warkiz.tickseekbar.ResourceTable.Color_colorAccent,
+                        TickSeekBarConstants.DEFAULT_PIXEL_MAP_HEIGHT));
+        drawableStateElement.addState(new int[] {ComponentState.COMPONENT_STATE_EMPTY},
+                createCircularDrawable(context, com.warkiz.tickseekbar.ResourceTable.Color_color_gray,
+                        TickSeekBarConstants.DEFAULT_PIXEL_MAP_HEIGHT));
 ```
 
 TickTexts selector color：
 
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <!--this color is for texts those are at left side of thumb-->
-    <item android:color="@color/colorAccent" android:state_selected="true" />
-    <!--for tick text which is stopped under thumb -->
-    <item android:color="@color/color_blue" android:state_hovered="true" />
-    <!--for texts those are at right side of thumb-->
-    <item android:color="@color/color_gray" />
-</selector>
+```    if (stateSet.length > 0 && stateSet[0] == COMPONENT_STATE_SELECTED){
+                    mSelectedTextsColor = new Color(getContext().getColor(ResourceTable.Color_colorAccent));
+                    mUnselectedTextsColor = new Color(getContext().getColor(ResourceTable.Color_color_gray));
+                    mHoveredTextColor = new Color(getContext().getColor(ResourceTable.Color_color_blue));
+                } else if (stateSet.length > 1 && stateSet[1] == COMPONENT_STATE_HOVERED) {
+                    mSelectedTextsColor = new Color(getContext().getColor(ResourceTable.Color_colorAccent));
+                    mHoveredTextColor = new Color(getContext().getColor(ResourceTable.Color_color_blue));
+                } else {
+                    mUnselectedTextsColor = new Color(getContext().getColor(ResourceTable.Color_color_gray));
+                    mSelectedTextsColor = mUnselectedTextsColor;
+                    mHoveredTextColor = mUnselectedTextsColor;
+                }
 ```
 
 ## Listener
-```Java
-seekBar.setOnSeekChangeListener(new OnSeekChangeListener() {
+```seekBar.setOnSeekChangeListener(new OnSeekChangeListener() {
         @Override
         public void onSeeking(SeekParams seekParams) {
             Log.i(TAG, seekParams.seekBar);
@@ -181,45 +181,6 @@ seekBar.setOnSeekChangeListener(new OnSeekChangeListener() {
 
 });
 ```
+## Support & extension
 
-## Proguard
-
-``` groovy
--dontwarn com.warkiz.tickseekbar.**
-```
-
-## Attributes
-
-[ attr.xml ](https://github.com/warkiz/TickSeekBar/blob/master/tickseekbar/src/main/res/values/attr.xml)
-
-## Support & Contact me
-
-感谢：
-自从在文档里公布了二维码，我收到国内的朋友的一些打赏，虽然金额不大，但是一些支持和鼓励的话语还是让我感到开心，非常感谢。
-
-感谢所有之前支持我的朋友。如果下次你要给我打赏，可以顺带写上你的github地址，我会在这里用链接贴出来，算是相互鼓励。
-
-感谢你们的支持。
-
-
-<img src="https://github.com/warkiz/IndicatorSeekBar/blob/master/app/src/main/res/mipmap-xxhdpi/alipay.png?raw=true" width = "400" height = "531"/><img src="https://github.com/warkiz/IndicatorSeekBar/blob/master/app/src/main/res/mipmap-xxhdpi/wechat_pay.png?raw=true" width = "387" height = "531"/>
-
-Feel free to contact me if you have any trouble on this project:
-1. Create an issue.
-2. Send mail to me, "warkiz".concat("4j").concat("@").concat("gmail.com")
-
-## License
-
-	Copyright (C) 2017 zhuangguangquan warkiz
-
-	Licensed under the Apache License, Version 2.0 (the "License");
-	you may not use this file except in compliance with the License.
-	You may obtain a copy of the License at
-
-	   http://www.apache.org/licenses/LICENSE-2.0
-
-	Unless required by applicable law or agreed to in writing, software
-	distributed under the License is distributed on an "AS IS" BASIS,
-	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-	See the License for the specific language governing permissions and
-	limitations under the License.
+Currently there is a limitation to set drawable elements from app side. So drawable cannot be set from sample app to ticks or thumbs.

@@ -1,75 +1,86 @@
 package com.warkiz.tickseekbar;
 
-import android.content.Context;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.StateListDrawable;
-import android.support.annotation.ArrayRes;
-import android.support.annotation.ColorInt;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.NonNull;
+import com.warkiz.tickseekbar.utils.SizeUtils;
+import com.warkiz.tickseekbar.utils.TickSeekBarConstants;
+
+import java.io.IOException;
+
+import ohos.agp.components.element.Element;
+import ohos.agp.components.element.StateElement;
+import ohos.agp.text.Font;
+import ohos.agp.utils.Color;
+import ohos.app.Context;
+import ohos.global.resource.NotExistException;
+import ohos.global.resource.WrongTypeException;
 
 /**
- * created by zhuangguangquan on 2018/6/6
+ * Builder class for TickSeekBar.
  */
-
 public class Builder {
     final Context context;
+
     //seek bar
-    float max = 100;
+    float max = TickSeekBarConstants.DEFAULT_MAX_VALUE;
     float min = 0;
-    float progress = 0;
+    float progress = (float) 0.0;
     boolean progressValueFloat = false;
     boolean seekSmoothly = false;
     boolean r2l = false;
     boolean userSeekable = true;
     boolean onlyThumbDraggable = false;
+
     //track
     int trackBackgroundSize;
-    int trackBackgroundColor = Color.parseColor("#D7D7D7");
+    Color trackBackgroundColor = new Color(Color.getIntColor(TickSeekBarConstants.COLOR_LIGHTER_GRAY));
     int trackProgressSize;
-    int trackProgressColor = Color.parseColor("#FF4081");
-    boolean trackRoundedCorners = false;
+    Color trackProgressColor = new Color(Color.getIntColor(TickSeekBarConstants.COLOR_ACCENT));
+    boolean trackRoundedCorners = true;
+
     //thumbText
-    int thumbTextColor = Color.parseColor("#FF4081");
+    Color thumbTextColor = new Color(Color.getIntColor(TickSeekBarConstants.COLOR_ACCENT));
     int thumbTextShow = TextPosition.NONE;
+
     //thumb
     int thumbSize;
-    int thumbColor = Color.parseColor("#FF4081");
+    Color thumbColor = new Color(Color.getIntColor(TickSeekBarConstants.COLOR_ACCENT));
     boolean thumbAutoAdjust = true;
-    ColorStateList thumbColorStateList = null;
-    Drawable thumbDrawable = null;
+    StateElement thumbColorStateList = null;
+    Element thumbDrawable = null;
+
     //tickTexts
     int tickTextsShow = TextPosition.NONE;
-    int tickTextsColor = Color.parseColor("#FF4081");
-    int tickTextsSize;
+    Color tickTextsColor = new Color(Color.getIntColor(TickSeekBarConstants.COLOR_ACCENT));
+    StateElement tickTextsColorStateList;
+    int tickTextsSize = TickSeekBarConstants.DEFAULT_TICK_TEXT_SIZE;
     String[] tickTextsCustomArray = null;
-    Typeface tickTextsTypeFace = Typeface.DEFAULT;
-    ColorStateList tickTextsColorStateList = null;
+    Font tickTextFontType = Font.DEFAULT;
+
     //tickMarks
-    int tickCount = 0;
+    int tickCount = 2;
     int showTickMarksType = TickMarkType.NONE;
-    int tickMarksColor = Color.parseColor("#FF4081");
+    Color tickMarksColor = new Color(Color.getIntColor(TickSeekBarConstants.COLOR_ACCENT));
     int tickMarksSize;
-    Drawable tickMarksDrawable = null;
+    Element tickMarksDrawable = null;
+    ohos.global.resource.Element tickMarksResourceDrawable;
     boolean tickMarksEndsHide = false;
     boolean tickMarksSweptHide = false;
-    ColorStateList tickMarksColorStateList = null;
-    public boolean clearPadding = false;
+    StateElement tickMarksColorStateList;
+
+    /**
+     * To initialize the clearPadding.
+     */
+    boolean clearPadding = false;
 
     Builder(Context context) {
         this.context = context;
-        this.trackBackgroundSize = SizeUtils.dp2px(context, 2);
-        this.trackProgressSize = SizeUtils.dp2px(context, 2);
-        this.tickMarksSize = SizeUtils.dp2px(context, 10);
-        this.tickTextsSize = SizeUtils.sp2px(context, 13);
-        this.thumbSize = SizeUtils.dp2px(context, 14);
+        this.trackBackgroundSize = 2;
+        this.trackProgressSize = 2;
+        this.tickMarksSize = TickSeekBarConstants.DEFAULT_TICK_MARKS_SIZE;
+        this.thumbSize = TickSeekBarConstants.DEFAULT_THUMB_SIZE;
     }
 
     /**
-     * call this to new an TickSeekBar
+     * call this to new an TickSeekBar.
      *
      * @return TickSeekBar
      */
@@ -112,7 +123,7 @@ public class Builder {
     }
 
     /**
-     * seek continuously or discrete
+     * seek continuously or discrete.
      *
      * @param seekSmoothly true for seek continuously ignore having tickMarks.
      */
@@ -143,10 +154,10 @@ public class Builder {
     }
 
     /**
-     * prevent user from touching to seek or not
+     * prevent user from touching to seek or not.
      *
      * @param userSeekable true user can seek.
-     * @return
+     * @return Builder object
      */
     public Builder userSeekable(boolean userSeekable) {
         this.userSeekable = userSeekable;
@@ -157,7 +168,7 @@ public class Builder {
      * user change the thumb's location by touching thumb,touching track will not worked.
      *
      * @param onlyThumbDraggable true for seeking only by drag thumb. default false;
-     * @return
+     * @return Builder object
      */
     public Builder onlyThumbDraggable(boolean onlyThumbDraggable) {
         this.onlyThumbDraggable = onlyThumbDraggable;
@@ -165,9 +176,10 @@ public class Builder {
     }
 
     /**
-     * set the seek bar's background track's Stroke Width
+     * set the seek bar's background track's Stroke Width.
      *
      * @param trackBackgroundSize The dp size.
+     * @return Builder object
      */
     public Builder trackBackgroundSize(int trackBackgroundSize) {
         this.trackBackgroundSize = SizeUtils.dp2px(context, trackBackgroundSize);
@@ -177,15 +189,16 @@ public class Builder {
     /**
      * set the seek bar's background track's color.
      *
-     * @param trackBackgroundColor colorInt
+     * @param trackBackgroundColor the background track color
+     * @return Builder object
      */
-    public Builder trackBackgroundColor(@ColorInt int trackBackgroundColor) {
+    public Builder trackBackgroundColor(Color trackBackgroundColor) {
         this.trackBackgroundColor = trackBackgroundColor;
         return this;
     }
 
     /**
-     * set the seek bar's progress track's Stroke Width
+     * set the seek bar's progress track's Stroke Width.
      *
      * @param trackProgressSize The dp size.
      */
@@ -197,9 +210,10 @@ public class Builder {
     /**
      * set the seek bar's progress track's color.
      *
-     * @param trackProgressColor colorInt
+     * @param trackProgressColor the progress track color
+     * @return Builder object
      */
-    public Builder trackProgressColor(@ColorInt int trackProgressColor) {
+    public Builder trackProgressColor(Color trackProgressColor) {
         this.trackProgressColor = trackProgressColor;
         return this;
     }
@@ -217,9 +231,10 @@ public class Builder {
     /**
      * set the seek bar's thumb's text color.
      *
-     * @param thumbTextColor colorInt
+     * @param thumbTextColor the thumb text color
+     * @return Builder object
      */
-    public Builder thumbTextColor(@ColorInt int thumbTextColor) {
+    public Builder thumbTextColor(Color thumbTextColor) {
         this.thumbTextColor = thumbTextColor;
         return this;
     }
@@ -238,15 +253,16 @@ public class Builder {
     /**
      * set the seek bar's thumb's color.
      *
-     * @param thumbColor colorInt
+     * @param thumbColor the thumb color
+     * @return Builder object
      */
-    public Builder thumbColor(@ColorInt int thumbColor) {
+    public Builder thumbColor(Color thumbColor) {
         this.thumbColor = thumbColor;
         return this;
     }
 
     /**
-     * adjust thumb to tick position auto after touch up
+     * adjust thumb to tick position auto after touch up.
      *
      * @param autoAdjust true to adjust thumb to tick position auto after touch up
      */
@@ -262,12 +278,7 @@ public class Builder {
      * @return Builder
      * selector format like:
      */
-    //<?xml version="1.0" encoding="utf-8"?>
-    //<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    //<item android:color="@color/colorAccent" android:state_pressed="true" />  <!--this color is for thumb which is at pressing status-->
-    //<item android:color="@color/color_blue" />                                <!--for thumb which is at normal status-->
-    //</selector>
-    public Builder thumbColorStateList(@NonNull ColorStateList thumbColorStateList) {
+    public Builder thumbColorStateList(StateElement thumbColorStateList) {
         this.thumbColorStateList = thumbColorStateList;
         return this;
     }
@@ -287,7 +298,7 @@ public class Builder {
      *
      * @param thumbDrawable the drawable show as Thumb.
      */
-    public Builder thumbDrawable(@NonNull Drawable thumbDrawable) {
+    public Builder thumbDrawable(Element thumbDrawable) {
         this.thumbDrawable = thumbDrawable;
         return this;
     }
@@ -297,15 +308,8 @@ public class Builder {
      *
      * @param thumbStateListDrawable the drawable show as Thumb.
      * @return Builder
-     * <p>
-     * selector format:
      */
-    //<?xml version="1.0" encoding="utf-8"?>
-    //<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    //<item android:drawable="Your drawableA" android:state_pressed="true" />  <!--this drawable is for thumb when pressing-->
-    //<item android:drawable="Your drawableB" />  < !--for thumb when normal-->
-    //</selector>
-    public Builder thumbDrawable(@NonNull StateListDrawable thumbStateListDrawable) {
+    public Builder thumbDrawableStateList(StateElement thumbStateListDrawable) {
         this.thumbDrawable = thumbStateListDrawable;
         return this;
     }
@@ -315,13 +319,12 @@ public class Builder {
      *
      * @param thumbDrawableId the drawableId for thumb drawable.
      */
-    public Builder thumbDrawable(@DrawableRes int thumbDrawableId) {
-        this.thumbDrawable = context.getResources().getDrawable(thumbDrawableId);
+    public Builder thumbDrawable(int thumbDrawableId) {
         return this;
     }
 
     /**
-     * show the tick texts in one place
+     * show the tick texts in one place.
      *
      * @param textPosition the position for texts to show,
      *                     see{@link TextPosition}
@@ -337,9 +340,9 @@ public class Builder {
     /**
      * set the color for text below/above seek bar's tickText.
      *
-     * @param tickTextsColor ColorInt
+     * @param tickTextsColor for tick text color
      */
-    public Builder tickTextsColor(@ColorInt int tickTextsColor) {
+    public Builder tickTextsColor(Color tickTextsColor) {
         this.tickTextsColor = tickTextsColor;
         return this;
     }
@@ -347,17 +350,11 @@ public class Builder {
     /**
      * set the selector color for text below/above seek bar's tickText.
      *
-     * @param tickTextsColorStateList ColorInt
-     * @return Builder
+     * @param tickTextsColorStateList tick text color state
+     * @return Builder objects
      * selector format like:
      */
-    //<?xml version="1.0" encoding="utf-8"?>
-    //<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    //<item android:color="@color/colorAccent" android:state_selected="true" />  <!--this color is for texts those are at left side of thumb-->
-    //<item android:color="@color/color_blue" android:state_hovered="true" />     <!--for thumb below text-->
-    //<item android:color="@color/color_gray" />                                 <!--for texts those are at right side of thumb-->
-    //</selector>
-    public Builder tickTextsColorStateList(@NonNull ColorStateList tickTextsColorStateList) {
+    public Builder tickTextsColorStateList(StateElement tickTextsColorStateList) {
         this.tickTextsColorStateList = tickTextsColorStateList;
         return this;
     }
@@ -382,24 +379,13 @@ public class Builder {
         return this;
     }
 
-
     /**
      * call this method to replace the seek bar's tickMarks' below/above tick texts.
      *
      * @param tickTextsArray the length should same as tickNum.
      */
-    public Builder tickTextsArray(@ArrayRes int tickTextsArray) {
-        this.tickTextsCustomArray = context.getResources().getStringArray(tickTextsArray);
-        return this;
-    }
-
-    /**
-     * set the tick text's / thumb text textTypeface .
-     *
-     * @param tickTextsTypeFace The text textTypeface.
-     */
-    public Builder tickTextsTypeFace(Typeface tickTextsTypeFace) {
-        this.tickTextsTypeFace = tickTextsTypeFace;
+    public Builder tickTextsArray(int tickTextsArray) throws NotExistException, WrongTypeException, IOException {
+        this.tickTextsCustomArray = context.getResourceManager().getElement(tickTextsArray).getStringArray();
         return this;
     }
 
@@ -432,9 +418,9 @@ public class Builder {
     /**
      * set the seek bar's tick's color.
      *
-     * @param tickMarksColor colorInt
+     * @param tickMarksColor tick marks color
      */
-    public Builder tickMarksColor(@ColorInt int tickMarksColor) {
+    public Builder tickMarksColor(Color tickMarksColor) {
         this.tickMarksColor = tickMarksColor;
         return this;
     }
@@ -442,16 +428,11 @@ public class Builder {
     /**
      * set the seek bar's tick's color.
      *
-     * @param tickMarksColorStateList colorInt
-     * @return Builder
+     * @param tickMarksColorStateList tick marks color state
+     * @return Builder object
      * selector format like:
      */
-    //<?xml version="1.0" encoding="utf-8"?>
-    //<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    //<item android:color="@color/colorAccent" android:state_selected="true" />  <!--this color is for marks those are at left side of thumb-->
-    //<item android:color="@color/color_gray" />                                 <!--for marks those are at right side of thumb-->
-    //</selector>
-    public Builder tickMarksColor(@NonNull ColorStateList tickMarksColorStateList) {
+    public Builder tickMarksColorState(StateElement tickMarksColorStateList) {
         this.tickMarksColorStateList = tickMarksColorStateList;
         return this;
     }
@@ -471,7 +452,7 @@ public class Builder {
      *
      * @param tickMarksDrawable the drawable show as tickMark.
      */
-    public Builder tickMarksDrawable(@NonNull Drawable tickMarksDrawable) {
+    public Builder tickMarksDrawable(Element tickMarksDrawable) {
         this.tickMarksDrawable = tickMarksDrawable;
         return this;
     }
@@ -483,13 +464,19 @@ public class Builder {
      * @return Builder
      * selector format like :
      */
-    //<?xml version="1.0" encoding="utf-8"?>
-    //<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    //<item android:drawable="@mipmap/ic_launcher_round" android:state_pressed="true" />  <!--this drawable is for thumb when pressing-->
-    //<item android:drawable="@mipmap/ic_launcher" />  <!--for thumb when normal-->
-    //</selector>
-    public Builder tickMarksDrawable(@NonNull StateListDrawable tickMarksStateListDrawable) {
+    public Builder tickMarksDrawable(StateElement tickMarksStateListDrawable) {
         this.tickMarksDrawable = tickMarksStateListDrawable;
+        return this;
+    }
+
+    /**
+     * call this method to custom the tick showing drawable by selector.
+     *
+     * @param  tickMarksResourceDrawable tick marks drawable resource.
+     * @return Builder object
+     */
+    public Builder tickMarksDrawable(ohos.global.resource.Element tickMarksResourceDrawable) {
+        this.tickMarksResourceDrawable = tickMarksResourceDrawable;
         return this;
     }
 
@@ -504,7 +491,7 @@ public class Builder {
     }
 
     /**
-     * call this method to hide the tickMarks on seekBar's thumb left;
+     * call this method to hide the tickMarks on seekBar's thumb left.
      *
      * @param tickMarksSweptHide true for hide.
      */
@@ -512,5 +499,4 @@ public class Builder {
         this.tickMarksSweptHide = tickMarksSweptHide;
         return this;
     }
-
 }

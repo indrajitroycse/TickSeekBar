@@ -1,20 +1,23 @@
 package com.warkiz.tickseekbar;
 
 /**
- * created by zhuangguangquan on 2018/6/6
+ * Text position class.
  */
 
-public interface TextPosition {
+public class TextPosition {
     /**
-     * don't show text
+     * don't show text.
      */
-    int NONE = 0;
+    public static final int NONE = 0;
     /**
-     * show text below the seek bar
+     * show text below the seek bar.
      */
-    int BELOW = 1;
+    public static final int BELOW = 1;
     /**
-     * show text above the seek bar
+     * show text above the seek bar.
      */
-    int ABOVE = 2;
+    public static final int ABOVE = 2;
+
+    private TextPosition() {
+    }
 }

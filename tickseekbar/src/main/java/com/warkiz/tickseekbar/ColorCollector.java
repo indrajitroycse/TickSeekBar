@@ -1,13 +1,16 @@
 package com.warkiz.tickseekbar;
 
-
-import android.support.annotation.ColorInt;
+import ohos.agp.utils.Color;
 
 /**
- * created by zhuangguangquan on 2018/6/6
- * <p>
- * for collecting each section track color
+ * For collecting each section track color.
  */
 public interface ColorCollector {
-    boolean collectSectionTrackColor(@ColorInt int[] colorIntArr);
+    /**
+     * Collect section track color.
+     *
+     * @param colorArr color array
+     * @return boolean value
+     */
+    boolean collectSectionTrackColor(Color[] colorArr);
 }

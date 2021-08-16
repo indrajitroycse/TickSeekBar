@@ -1,24 +1,27 @@
 package com.warkiz.tickseekbar;
 
 /**
- * created by zhuangguangquan on 2018/6/6
+ * Tick marks type class.
  */
 
-public interface TickMarkType {
+public class TickMarkType {
     /**
-     * don't show the tickMarks
+     * don't show the tickMarks.
      */
-    int NONE = 0;
+    public static final int NONE = 0;
     /**
-     * show tickMarks shape as regular oval
+     * show tickMarks shape as regular oval.
      */
-    int OVAL = 1;
+    public static final int OVAL = 1;
     /**
-     * show tickMarks shape as regular square
+     * show tickMarks shape as regular square.
      */
-    int SQUARE = 2;
+    public static final int SQUARE = 2;
     /**
      * show tickMarks shape as vertical line , line'size is 2 dp.
      */
-    int DIVIDER = 3;
+    public static final int DIVIDER = 3;
+
+    private TickMarkType() {
+    }
 }
