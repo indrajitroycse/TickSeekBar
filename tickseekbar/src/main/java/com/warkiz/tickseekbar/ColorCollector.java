@@ -3,6 +3,8 @@ package com.warkiz.tickseekbar;
 import ohos.agp.utils.Color;
 
 /**
+ * Created by zhuangguangquan on 2018/6/6.
+ *
  * For collecting each section track color.
  */
 public interface ColorCollector {

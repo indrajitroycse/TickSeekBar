@@ -14,6 +14,8 @@ import ohos.global.resource.NotExistException;
 import ohos.global.resource.WrongTypeException;
 
 /**
+ * Created by zhuangguangquan on 2018/6/6.
+ *
  * Builder class for TickSeekBar.
  */
 public class Builder {

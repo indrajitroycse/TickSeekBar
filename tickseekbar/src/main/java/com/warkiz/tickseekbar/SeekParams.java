@@ -1,7 +1,9 @@
 package com.warkiz.tickseekbar;
 
 /**
- * save the params when the seek bar is seeking.
+ * Created by zhuangguangquan on 2018/6/6.
+ *
+ * To save the params when the seek bar is seeking.
  */
 public class SeekParams {
     /**

@@ -44,7 +44,9 @@ import static ohos.agp.components.ComponentState.COMPONENT_STATE_HOVERED;
 import static ohos.agp.components.ComponentState.COMPONENT_STATE_FOCUSED;
 
 /**
- * Creating the TickSeekBar.
+ * Created by zhuangguangquan on 2018/6/6.
+ *
+ * Creating the TickSeekBar view.
  */
 public class TickSeekBar extends Component implements Component.DrawTask, Component.TouchEventListener,
         Component.EstimateSizeListener, Component.DraggedListener {

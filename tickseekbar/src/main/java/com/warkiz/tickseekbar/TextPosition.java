@@ -1,6 +1,8 @@
 package com.warkiz.tickseekbar;
 
 /**
+ * Created by zhuangguangquan on 2018/6/6.
+ *
  * Text position class.
  */
 

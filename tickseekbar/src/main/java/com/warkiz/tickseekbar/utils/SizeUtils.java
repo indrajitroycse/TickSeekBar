@@ -5,6 +5,8 @@ import ohos.agp.components.Component;
 import ohos.app.Context;
 
 /**
+ * Created by zhuangguangquan on 2018/6/6.
+ *
  * Size util class.
  */
 public class SizeUtils {
