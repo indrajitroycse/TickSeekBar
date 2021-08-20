@@ -1,7 +1,7 @@
 # TickSeekBar
 
-[![DOWNLOAD](https://api.bintray.com/packages/warkiz/maven/tickseekbar/images/download.svg)](https://bintray.com/warkiz/maven/tickseekbar/_latestVersion)
-[![API](https://img.shields.io/badge/API-14%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=14)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=applibgroup_TickSeekBar&metric=alert_status)](https://sonarcloud.io/dashboard?id=applibgroup_TickSeekBar)
+[![.github/workflows/main.yml](https://github.com/applibgroup/TickSeekBar/actions/workflows/main.yml/badge.svg)](https://github.com/applibgroup/TickSeekBar/actions/workflows/main.yml)
 
 ## Introduction
 

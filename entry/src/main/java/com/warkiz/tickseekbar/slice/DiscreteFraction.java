@@ -115,22 +115,22 @@ public class DiscreteFraction extends Fraction {
 
             @Override
             public void onStartTrackingTouch(TickSeekBar seekBar) {
-                states.setText(mContext.getString(ResourceTable.String_states_text)
-                        + mContext.getString(ResourceTable.String_on_start));
-                progress.setText(mContext.getString(ResourceTable.String_progress_text) + seekBar.getProgress());
+                fromUser.setText(mContext.getString(ResourceTable.String_from_user_text) + "true");
                 progressFloat.setText(mContext.getString(ResourceTable.String_progress_float_text)
                         + seekBar.getProgressFloat());
-                fromUser.setText(mContext.getString(ResourceTable.String_from_user_text) + "true");
+                progress.setText(mContext.getString(ResourceTable.String_progress_text) + seekBar.getProgress());
+                states.setText(mContext.getString(ResourceTable.String_states_text)
+                        + mContext.getString(ResourceTable.String_on_start));
             }
 
             @Override
             public void onStopTrackingTouch(TickSeekBar seekBar) {
+                fromUser.setText(mContext.getString(ResourceTable.String_from_user_text) + "false");
+                progressFloat.setText(mContext.getString(ResourceTable.String_progress_float_text)
+                        + seekBar.getProgressFloat());
                 states.setText(mContext.getString(ResourceTable.String_states_text)
                         + mContext.getString(ResourceTable.String_on_stop));
                 progress.setText(mContext.getString(ResourceTable.String_progress_text) + seekBar.getProgress());
-                progressFloat.setText(mContext.getString(ResourceTable.String_progress_float_text)
-                        + seekBar.getProgressFloat());
-                fromUser.setText(mContext.getString(ResourceTable.String_from_user_text) + "false");
             }
         });
     }
