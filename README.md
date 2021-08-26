@@ -7,7 +7,7 @@
 
 This is a customizable SeekBar library on Android. Also, If you need Indicator to show top of seek bar.
 
-# Source
+## Source
 
 The code in this repository was inspired from https://github.com/warkiz/TickSeekBar. We are very thankful to warkiz.
 
@@ -30,22 +30,23 @@ In order to use the library, add the following line to your **root** gradle file
 
 1. For using TickSeekBar module in sample app, include the source code and add the below dependencies in entry/build.gradle to generate hap/support.har.
 ```
-	implementation fileTree(dir: 'libs', include: ['*.jar', '*.har'])
-        implementation project(path: ':tickseekbar')
+    dependencies {
+        implementation fileTree(dir: 'libs', include: ['*.jar', '*.har'])
         implementation project(path: ':tickseekbar')
         testImplementation 'junit:junit:4.13'
         ohosTestImplementation 'com.huawei.ohos.testkit:runner:1.0.0.100'
+    }
 ```
 2. For using TickSeekBar in separate application using har file, add the har file in the entry/libs folder and add the dependencies in entry/build.gradle file.
 ```
-	dependencies {
-            implementation fileTree(dir: 'libs', include: ['*.har'])
-            testCompile 'junit:junit:4.12'
-	}
+    dependencies {
+        implementation fileTree(dir: 'libs', include: ['*.har'])
+        testCompile 'junit:junit:4.12'
+    }
 ```
 3. For using TickSeekBar from a remote repository in separate application, add the below dependencies in entry/build.gradle file.
 ```
-	dependencies {
+    dependencies {
         implementation 'dev.applibgroup:tickseekbar:1.0.0'
         testImplementation 'junit:junit:4.13'
     }
